@@ -6,7 +6,7 @@ apply from: '../sample/code_coverage.gradle'
 
 android {
     compileSdkVersion project.androidCompileSdkVersion
-    buildToolsVersion("$androidBuildToolsVersion")
+    buildToolsVersion = '28.0.3'
 
     defaultConfig {
         applicationId "com.stepstone.stepper.sample"

@@ -58,6 +58,8 @@ import com.stepstone.stepper.internal.widget.RightNavigationButton;
 import com.stepstone.stepper.internal.widget.TabsContainer;
 import com.stepstone.stepper.viewmodel.StepViewModel;
 
+import java.util.List;
+
 /**
  * Stepper widget implemented according to the <a href="https://www.google.com/design/spec/components/steppers.html">Material documentation</a>.<br>
  * It allows for setting three types of steppers:<br>
@@ -141,7 +143,7 @@ public class StepperLayout extends LinearLayout implements TabsContainer.TabItem
             }
 
             mCurrentStepPosition++;
-            onUpdate(mCurrentStepPosition, true);
+            onUpdate(mCurrentStepPosition, true, colors);
         }
 
     }
@@ -167,7 +169,7 @@ public class StepperLayout extends LinearLayout implements TabsContainer.TabItem
                 return;
             }
             mCurrentStepPosition--;
-            onUpdate(mCurrentStepPosition, true);
+            onUpdate(mCurrentStepPosition, true, colors);
         }
 
     }
@@ -214,6 +216,8 @@ public class StepperLayout extends LinearLayout implements TabsContainer.TabItem
     private ColorStateList mNextButtonColor;
 
     private ColorStateList mCompleteButtonColor;
+
+    private List<Integer> colors;
 
     @ColorInt
     private int mUnselectedColor;
@@ -334,7 +338,7 @@ public class StepperLayout extends LinearLayout implements TabsContainer.TabItem
             public void onGlobalLayout() {
                 //noinspection deprecation
                 mPager.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                onUpdate(mCurrentStepPosition, false);
+                onUpdate(mCurrentStepPosition, false, colors);
             }
         });
     }
@@ -348,6 +352,14 @@ public class StepperLayout extends LinearLayout implements TabsContainer.TabItem
     public void setAdapter(@NonNull StepAdapter stepAdapter, @IntRange(from = 0) int currentStepPosition) {
         this.mCurrentStepPosition = currentStepPosition;
         setAdapter(stepAdapter);
+    }
+
+    public List<Integer> getColors() {
+        return colors;
+    }
+
+    public void setColors(List<Integer> colors) {
+        this.colors = colors;
     }
 
     /**
@@ -382,11 +394,7 @@ public class StepperLayout extends LinearLayout implements TabsContainer.TabItem
     @UiThread
     public void onTabClicked(int position) {
         if (mTabNavigationEnabled) {
-            if (position > mCurrentStepPosition) {
-                onNext();
-            } else if (position < mCurrentStepPosition) {
-                setCurrentStepPosition(position);
-            }
+            setCurrentStepPosition(position);
         }
     }
 
@@ -431,7 +439,7 @@ public class StepperLayout extends LinearLayout implements TabsContainer.TabItem
         }
         mCurrentStepPosition = currentStepPosition;
 
-        onUpdate(currentStepPosition, true);
+        onUpdate(currentStepPosition, true, colors);
     }
 
     /**
@@ -959,7 +967,7 @@ public class StepperLayout extends LinearLayout implements TabsContainer.TabItem
     }
 
     private void invalidateCurrentPosition() {
-        mStepperType.onStepSelected(mCurrentStepPosition, false);
+        mStepperType.onStepSelected(mCurrentStepPosition, false, colors);
     }
 
     private boolean verifyCurrentStep(Step step) {
@@ -1001,7 +1009,11 @@ public class StepperLayout extends LinearLayout implements TabsContainer.TabItem
         }
     }
 
-    private void onUpdate(int newStepPosition, boolean userTriggeredChange) {
+    public void setColor(int position, int color){
+        mStepperType.onSetColor(position, color);
+    }
+
+    public void onUpdate(int newStepPosition, boolean userTriggeredChange, List<Integer> colors) {
         mPager.setCurrentItem(newStepPosition);
         final boolean isLast = isLastPosition(newStepPosition);
         final boolean isFirst = newStepPosition == 0;
@@ -1023,7 +1035,7 @@ public class StepperLayout extends LinearLayout implements TabsContainer.TabItem
 
         setCompoundDrawablesForNavigationButtons(viewModel.getBackButtonStartDrawableResId(), viewModel.getNextButtonEndDrawableResId());
 
-        mStepperType.onStepSelected(newStepPosition, userTriggeredChange);
+        mStepperType.onStepSelected(newStepPosition, userTriggeredChange, colors);
         mListener.onStepSelected(newStepPosition);
         Step step = mStepAdapter.findStep(newStepPosition);
         if (step != null) {

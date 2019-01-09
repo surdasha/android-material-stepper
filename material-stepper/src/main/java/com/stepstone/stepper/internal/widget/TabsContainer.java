@@ -146,23 +146,29 @@ public class TabsContainer extends FrameLayout {
 
     /**
      * Changes the position of the current step and updates the UI based on it.
-     * @param currentStepPosition new current step
-     * @param stepErrors map containing error state for step positions
-     * @param showErrorMessageEnabled true if an error message below step title should appear when an error occurs
+     *
+     * @param currentStepPosition     new current step
      */
-    public void updateSteps(int currentStepPosition, SparseArray<VerificationError> stepErrors, boolean showErrorMessageEnabled) {
+    public void updateSteps(int currentStepPosition, List<Integer> colors) {
         int size = mStepViewModels.size();
         for (int i = 0; i < size; i++) {
             StepTab childTab = (StepTab) mTabsInnerContainer.getChildAt(i);
-            boolean done = i < currentStepPosition;
             final boolean current = i == currentStepPosition;
+            childTab.updateBold(current);
+            if (colors != null && colors.size() == size)
+                childTab.updateColor(colors.get(i));
 
-            VerificationError error = stepErrors.get(i);
-            childTab.updateState(error, done, current, showErrorMessageEnabled);
             if (current) {
                 mTabsScrollView.smoothScrollTo(childTab.getLeft() - mContainerLateralPadding, 0);
             }
         }
+
+    }
+
+    public void updateStep(int currentStepPosition, int color) {
+        StepTab childTab = (StepTab) mTabsInnerContainer.getChildAt(currentStepPosition);
+        if (childTab != null)
+            childTab.updateColor(color);
     }
 
     private View createStepTab(final int position, @NonNull StepViewModel stepViewModel) {
