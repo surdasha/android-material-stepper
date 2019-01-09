@@ -157,9 +157,10 @@ public class StepTab extends RelativeLayout {
 
     /**
      * Updates the UI state of the tab and sets {@link #mCurrentState} based on the arguments.
-     *  @param error   not null if an error/warning should be shown, null if not an error
-     * @param done    true the step was completed, if warning is not shown and this is <code>true</code> a done indicator will be shown
-     * @param current true if this is the currently selected step
+     *
+     * @param error                   not null if an error/warning should be shown, null if not an error
+     * @param done                    true the step was completed, if warning is not shown and this is <code>true</code> a done indicator will be shown
+     * @param current                 true if this is the currently selected step
      * @param showErrorMessageEnabled true if an error message below step title should appear when an error occurs
      */
     public void updateState(@Nullable final VerificationError error, final boolean done, final boolean current, boolean showErrorMessageEnabled) {
@@ -175,6 +176,14 @@ public class StepTab extends RelativeLayout {
         } else {
             mCurrentState.changeToInactiveNumber();
         }
+    }
+
+    public void updateBold(boolean current) {
+        mStepTitleTextView.setTypeface(current ? mBoldTypeface : mNormalTypeface);
+    }
+
+    public void updateColor(int color) {
+        mStepIconBackground.setColorFilter(color, PorterDuff.Mode.SRC_IN);
     }
 
     /**
@@ -319,7 +328,7 @@ public class StepTab extends RelativeLayout {
         @Override
         @CallSuper
         protected void changeToDone() {
-            mStepDoneIndicator.setVisibility(VISIBLE);
+            //   mStepDoneIndicator.setVisibility(VISIBLE);
             mStepNumberTextView.setVisibility(GONE);
             super.changeToDone();
         }

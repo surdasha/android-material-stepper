@@ -25,6 +25,8 @@ import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.adapter.StepAdapter;
 import com.stepstone.stepper.internal.widget.ColorableProgressBar;
 
+import java.util.List;
+
 import static android.support.annotation.RestrictTo.Scope.LIBRARY;
 
 /**
@@ -47,11 +49,16 @@ public class ProgressBarStepperType extends AbstractStepperType {
         }
     }
 
+    @Override
+    public void onSetColor(int newStepPosition, int color) {
+
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
-    public void onStepSelected(int newStepPosition, boolean userTriggeredChange) {
+    public void onStepSelected(int newStepPosition, boolean userTriggeredChange, List<Integer> colors) {
         mProgressBar.setProgressCompat(newStepPosition + 1, userTriggeredChange);
     }
 

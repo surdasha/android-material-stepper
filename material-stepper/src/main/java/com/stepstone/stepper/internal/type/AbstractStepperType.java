@@ -27,6 +27,8 @@ import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 import com.stepstone.stepper.adapter.StepAdapter;
 
+import java.util.List;
+
 import static android.support.annotation.RestrictTo.Scope.LIBRARY;
 
 /**
@@ -63,12 +65,14 @@ public abstract class AbstractStepperType {
         this.mStepperLayout = stepperLayout;
     }
 
+    public abstract void onSetColor(int newStepPosition, int color);
+
     /**
      * Called when a step gets selected as the new current step.
      * @param newStepPosition new current step position
      * @param userTriggeredChange <code>true</code> if current step position changed as a direct result of user interaction
      */
-    public abstract void onStepSelected(int newStepPosition, boolean userTriggeredChange);
+    public abstract void onStepSelected(int newStepPosition, boolean userTriggeredChange, List<Integer> colors);
 
     /**
      * Called to set whether the stepPosition has an error or not, changing it's appearance.

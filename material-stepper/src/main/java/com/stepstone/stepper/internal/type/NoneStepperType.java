@@ -2,6 +2,8 @@ package com.stepstone.stepper.internal.type;
 
 import com.stepstone.stepper.StepperLayout;
 
+import java.util.List;
+
 /**
  * Created by yccheok on 29/6/2017.
  */
@@ -12,6 +14,11 @@ public class NoneStepperType extends AbstractStepperType {
     }
 
     @Override
-    public void onStepSelected(int newStepPosition, boolean userTriggeredChange) {
+    public void onSetColor(int newStepPosition, int color) {
+
+    }
+
+    @Override
+    public void onStepSelected(int newStepPosition, boolean userTriggeredChange, List<Integer> colors) {
     }
 }

@@ -57,21 +57,26 @@ public class TabsStepperType extends AbstractStepperType {
                     new StepViewModel.Builder(null).setTitle("Step 1").create(),
                     new StepViewModel.Builder(null).setTitle("Step 2").setSubtitle("Optional").create())
             );
-            mTabsContainer.updateSteps(0, new SparseArray<VerificationError>(), false);
+            mTabsContainer.updateSteps(0, stepperLayout.getColors());
             mTabsContainer.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void onSetColor(int newStepPosition, int color) {
+        mTabsContainer.updateStep(newStepPosition, color);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void onStepSelected(int newStepPosition, boolean userTriggeredChange) {
+    public void onStepSelected(int newStepPosition, boolean userTriggeredChange, List<Integer> colors) {
         if (!mStepperLayout.isShowErrorStateEnabled()) {
             mStepErrors.clear();
         }
 
-        mTabsContainer.updateSteps(newStepPosition, mStepErrors, mStepperLayout.isShowErrorMessageEnabled());
+        mTabsContainer.updateSteps(newStepPosition, colors);
     }
 
     /**
