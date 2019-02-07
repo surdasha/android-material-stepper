@@ -17,13 +17,13 @@ limitations under the License.
 package com.stepstone.stepper.internal.widget;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.RestrictTo;
 import android.support.annotation.UiThread;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -32,7 +32,6 @@ import android.widget.LinearLayout;
 
 import com.stepstone.stepper.R;
 import com.stepstone.stepper.StepperLayout;
-import com.stepstone.stepper.VerificationError;
 import com.stepstone.stepper.viewmodel.StepViewModel;
 
 import java.util.List;
@@ -149,14 +148,14 @@ public class TabsContainer extends FrameLayout {
      *
      * @param currentStepPosition     new current step
      */
-    public void updateSteps(int currentStepPosition, List<Integer> colors) {
+    public void updateSteps(int currentStepPosition, List<Drawable> colors) {
         int size = mStepViewModels.size();
         for (int i = 0; i < size; i++) {
             StepTab childTab = (StepTab) mTabsInnerContainer.getChildAt(i);
             final boolean current = i == currentStepPosition;
             childTab.updateBold(current);
             if (colors != null && colors.size() == size)
-                childTab.updateColor(colors.get(i));
+                childTab.updateTabIcon(colors.get(i));
 
             if (current) {
                 mTabsScrollView.smoothScrollTo(childTab.getLeft() - mContainerLateralPadding, 0);
@@ -165,10 +164,10 @@ public class TabsContainer extends FrameLayout {
 
     }
 
-    public void updateStep(int currentStepPosition, int color) {
+    public void updateStep(int currentStepPosition, Drawable color) {
         StepTab childTab = (StepTab) mTabsInnerContainer.getChildAt(currentStepPosition);
         if (childTab != null)
-            childTab.updateColor(color);
+            childTab.updateTabIcon(color);
     }
 
     private View createStepTab(final int position, @NonNull StepViewModel stepViewModel) {

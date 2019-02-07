@@ -16,6 +16,7 @@ limitations under the License.
 
 package com.stepstone.stepper.internal.type;
 
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.RestrictTo;
 import android.view.View;
@@ -50,7 +51,7 @@ public class ProgressBarStepperType extends AbstractStepperType {
     }
 
     @Override
-    public void onSetColor(int newStepPosition, int color) {
+    public void onSetTabIcon(int newStepPosition, Drawable color) {
 
     }
 
@@ -58,7 +59,7 @@ public class ProgressBarStepperType extends AbstractStepperType {
      * {@inheritDoc}
      */
     @Override
-    public void onStepSelected(int newStepPosition, boolean userTriggeredChange, List<Integer> colors) {
+    public void onStepSelected(int newStepPosition, boolean userTriggeredChange, List<Drawable> colors) {
         mProgressBar.setProgressCompat(newStepPosition + 1, userTriggeredChange);
     }
 

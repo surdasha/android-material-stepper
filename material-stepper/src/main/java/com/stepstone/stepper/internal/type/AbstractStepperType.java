@@ -16,6 +16,7 @@ limitations under the License.
 
 package com.stepstone.stepper.internal.type;
 
+import android.graphics.drawable.Drawable;
 import android.support.annotation.CallSuper;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
@@ -65,14 +66,14 @@ public abstract class AbstractStepperType {
         this.mStepperLayout = stepperLayout;
     }
 
-    public abstract void onSetColor(int newStepPosition, int color);
+    public abstract void onSetTabIcon(int newStepPosition, Drawable color);
 
     /**
      * Called when a step gets selected as the new current step.
      * @param newStepPosition new current step position
      * @param userTriggeredChange <code>true</code> if current step position changed as a direct result of user interaction
      */
-    public abstract void onStepSelected(int newStepPosition, boolean userTriggeredChange, List<Integer> colors);
+    public abstract void onStepSelected(int newStepPosition, boolean userTriggeredChange, List<Drawable> colors);
 
     /**
      * Called to set whether the stepPosition has an error or not, changing it's appearance.

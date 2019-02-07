@@ -182,8 +182,8 @@ public class StepTab extends RelativeLayout {
         mStepTitleTextView.setTypeface(current ? mBoldTypeface : mNormalTypeface);
     }
 
-    public void updateColor(int color) {
-        mStepIconBackground.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+    public void updateTabIcon(Drawable color) {
+        mStepIconBackground.setImageDrawable(color);
     }
 
     /**

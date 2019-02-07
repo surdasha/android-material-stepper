@@ -16,14 +16,13 @@ limitations under the License.
 
 package com.stepstone.stepper.internal.type;
 
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.RestrictTo;
-import android.util.SparseArray;
 import android.view.View;
 
 import com.stepstone.stepper.R;
 import com.stepstone.stepper.StepperLayout;
-import com.stepstone.stepper.VerificationError;
 import com.stepstone.stepper.adapter.StepAdapter;
 import com.stepstone.stepper.internal.widget.TabsContainer;
 import com.stepstone.stepper.viewmodel.StepViewModel;
@@ -57,13 +56,13 @@ public class TabsStepperType extends AbstractStepperType {
                     new StepViewModel.Builder(null).setTitle("Step 1").create(),
                     new StepViewModel.Builder(null).setTitle("Step 2").setSubtitle("Optional").create())
             );
-            mTabsContainer.updateSteps(0, stepperLayout.getColors());
+            mTabsContainer.updateSteps(0, stepperLayout.getTabIcons());
             mTabsContainer.setVisibility(View.VISIBLE);
         }
     }
 
     @Override
-    public void onSetColor(int newStepPosition, int color) {
+    public void onSetTabIcon(int newStepPosition, Drawable color) {
         mTabsContainer.updateStep(newStepPosition, color);
     }
 
@@ -71,7 +70,7 @@ public class TabsStepperType extends AbstractStepperType {
      * {@inheritDoc}
      */
     @Override
-    public void onStepSelected(int newStepPosition, boolean userTriggeredChange, List<Integer> colors) {
+    public void onStepSelected(int newStepPosition, boolean userTriggeredChange, List<Drawable> colors) {
         if (!mStepperLayout.isShowErrorStateEnabled()) {
             mStepErrors.clear();
         }
