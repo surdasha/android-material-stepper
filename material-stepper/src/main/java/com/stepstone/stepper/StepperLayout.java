@@ -217,7 +217,7 @@ public class StepperLayout extends LinearLayout implements TabsContainer.TabItem
 
     private ColorStateList mCompleteButtonColor;
 
-    private List<Integer> colors;
+    private List<Drawable> colors;
 
     @ColorInt
     private int mUnselectedColor;
@@ -354,11 +354,11 @@ public class StepperLayout extends LinearLayout implements TabsContainer.TabItem
         setAdapter(stepAdapter);
     }
 
-    public List<Integer> getColors() {
+    public List<Drawable> getTabIcons() {
         return colors;
     }
 
-    public void setColors(List<Integer> colors) {
+    public void setTabIcons(List<Drawable> colors) {
         this.colors = colors;
     }
 
@@ -1009,11 +1009,11 @@ public class StepperLayout extends LinearLayout implements TabsContainer.TabItem
         }
     }
 
-    public void setColor(int position, int color){
-        mStepperType.onSetColor(position, color);
+    public void setTabIcon(int position, Drawable color){
+        mStepperType.onSetTabIcon(position, color);
     }
 
-    public void onUpdate(int newStepPosition, boolean userTriggeredChange, List<Integer> colors) {
+    public void onUpdate(int newStepPosition, boolean userTriggeredChange, List<Drawable> colors) {
         mPager.setCurrentItem(newStepPosition);
         final boolean isLast = isLastPosition(newStepPosition);
         final boolean isFirst = newStepPosition == 0;
